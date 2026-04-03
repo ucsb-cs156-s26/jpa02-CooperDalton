@@ -55,8 +55,8 @@ public class HelloControllerTest {
         String actualContent = response.getResponse().getContentAsString();
 
         assertTrue(actualContent.contains("Name: Cooper"));
-        assertTrue(actualContent.contains("https://github.com/cooperdalton"));
-        assertTrue(actualContent.contains(">cooperdalton</a>"));
+        assertTrue(actualContent.contains("https://github.com/CooperDalton"));
+        assertTrue(actualContent.contains(">CooperDalton</a>"));
         assertTrue(actualContent.contains("<a href=\"/team\">s26-09</a>"));
     }
 
