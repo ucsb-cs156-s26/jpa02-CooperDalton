@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -49,6 +48,17 @@ public class HelloControllerTest {
         assertTrue(actualContent.contains(expectedContent),String.format("Expected content to contain: [%s]\nActual content: [%s]", expectedContent, actualContent));
     }
 
+    @Test
+    public void getInfo_has_expected_developer_details() throws Exception {
+        MvcResult response = mvc.perform(MockMvcRequestBuilders.get("/info").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+        String actualContent = response.getResponse().getContentAsString();
+
+        assertTrue(actualContent.contains("Name: Cooper"));
+        assertTrue(actualContent.contains("https://github.com/cooperdalton"));
+        assertTrue(actualContent.contains(">cooperdalton</a>"));
+        assertTrue(actualContent.contains("<a href=\"/team\">s26-09</a>"));
+    }
 
     @Test
     public void get_team_returns_team_object() throws Exception {
@@ -60,9 +70,5 @@ public class HelloControllerTest {
         Team expectedTeam = Developer.getTeam();
         assertEquals(expectedTeam, teamReturned);
     }
-
-
-    // TODO: Add additional tests as needed to get to 100% jacoco line coverage, and
-    // 100% mutation coverage (all mutants timed out or killed)
 
 }
